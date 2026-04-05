@@ -87,16 +87,12 @@ html.lenis, html.lenis body {
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
-  transition: transform 0.15s ease, margin 0.3s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+  transition: background 0.3s ease, border-color 0.3s ease;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.4);
   will-change: transform;
 }
 
 .cursor.active {
-  width: 60px;
-  height: 60px;
-  margin-left: -30px;
-  margin-top: -30px;
   background: rgba(255, 61, 0, 0.1);
   border-color: var(--accent);
 }
@@ -1335,10 +1331,6 @@ footer {
   
   <div class="hero-stats">
     <div class="stat">
-      <div class="stat-number">4</div>
-      <div class="stat-label">Projects shipped</div>
-    </div>
-    <div class="stat">
       <div class="stat-number">∞</div>
       <div class="stat-label">Ideas exploring</div>
     </div>
@@ -1352,11 +1344,13 @@ footer {
 <!-- Marquee -->
 <div class="marquee-section">
   <div class="marquee-track">
+    <div class="marquee-item">InfinityX <span class="marquee-dot"></span></div>
     <div class="marquee-item">Argonaut <span class="marquee-dot"></span></div>
     <div class="marquee-item">Lucid3D <span class="marquee-dot"></span></div>
     <div class="marquee-item">Hoomanly <span class="marquee-dot"></span></div>
     <div class="marquee-item">Just Us <span class="marquee-dot"></span></div>
     <div class="marquee-item">Always building <span class="marquee-dot"></span></div>
+    <div class="marquee-item">InfinityX <span class="marquee-dot"></span></div>
     <div class="marquee-item">Argonaut <span class="marquee-dot"></span></div>
     <div class="marquee-item">Lucid3D <span class="marquee-dot"></span></div>
     <div class="marquee-item">Hoomanly <span class="marquee-dot"></span></div>
@@ -1394,7 +1388,7 @@ footer {
               <div class="panel-label">The problem</div>
               <div class="panel-text">Every project management tool was built for software. Hardware teams speak in person-days, BOM lead times, and physical test results. We built the tool that speaks their language.</div>
               <div class="project-image">
-                <img src="https://images.unsplash.com/photo-1550851067-48d3dd68842e?w=600&q=80" alt="InfinityX" loading="lazy">
+                <img src="assets/infinityx-hero.jpg" alt="InfinityX" loading="lazy">
               </div>
               <div class="panel-tags">
                 <span class="tech-tag">React + Vite</span>
@@ -1782,8 +1776,10 @@ function mainLoop(time) {
   cursorY += (mouseY - cursorY) * 0.3;
   dotX += (mouseX - dotX) * 0.8;
   dotY += (mouseY - dotY) * 0.8;
-  const dotScale = cursor.classList.contains('active') ? 0 : 1;
-  cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+  const isActive = cursor.classList.contains('active');
+  const ringScale = isActive ? 2.5 : 1;
+  const dotScale = isActive ? 0 : 1;
+  cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) scale(${ringScale})`;
   cursorDot.style.transform = `translate3d(${dotX}px, ${dotY}px, 0) scale(${dotScale})`;
   cursorText.style.transform = `translate3d(${mouseX + 20}px, ${mouseY - 8}px, 0)`;
 
