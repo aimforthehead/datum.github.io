@@ -837,24 +837,62 @@
     }
 
     /* Project Image Preview */
-    .project-image {
-      position: relative;
-      margin-top: 32px;
-      overflow: hidden;
-      border-radius: 4px;
-    }
-
-    .project-image img {
+    .project-image img,
+    .project-video video {
       width: 100%;
-      height: 200px;
+      height: auto;
+      aspect-ratio: 16 / 9;
       object-fit: cover;
       filter: grayscale(100%);
       transition: filter 0.5s ease, transform 0.5s ease;
     }
 
-    .project-image:hover img {
+    .project-item[data-testid="project-infinityx"] .project-image img,
+    .project-item[data-testid="project-infinityx"] .project-video video {
+      aspect-ratio: 4 / 3;
+    }
+
+    .project-image:hover img,
+    .project-video:hover video {
       filter: grayscale(0%);
       transform: scale(1.02);
+    }
+
+    /* Slider for InfinityX */
+    .project-slider {
+      position: relative;
+      margin-top: 32px;
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 10px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .project-slider::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .project-slider::-webkit-scrollbar-track {
+      background: var(--line);
+    }
+
+    .project-slider::-webkit-scrollbar-thumb {
+      background: var(--accent);
+    }
+
+    .slide {
+      flex: 0 0 calc(100% - 40px);
+      scroll-snap-align: center;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    @media (max-width: 600px) {
+      .slide {
+        flex: 0 0 100%;
+      }
     }
 
     /* ══════════════════════════════════════════════════════════════════
@@ -1221,6 +1259,14 @@
    RESPONSIVE
    ══════════════════════════════════════════════════════════════════ */
     @media (max-width: 900px) {
+      .hero-content {
+        padding-top: 100px;
+      }
+
+      .hero-title .line {
+        height: auto;
+      }
+
       .about-section {
         grid-template-columns: 1fr;
         gap: 60px;
@@ -1241,21 +1287,47 @@
       }
 
       .project-header {
-        grid-template-columns: 50px 1fr auto;
+        grid-template-columns: 40px 1fr auto;
+        gap: 20px;
+        padding: 24px 5vw;
+      }
+
+      .project-number {
+        display: none;
       }
 
       .project-type {
         display: none;
       }
+
+      .project-name {
+        font-size: 24px;
+      }
+
+      .project-tagline {
+        font-size: 13px;
+      }
     }
 
     @media (max-width: 600px) {
       nav {
-        padding: 20px 5vw;
+        padding: 15px 5vw;
       }
 
       .nav-links {
         display: none;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
       }
 
       .hero-stats {
@@ -1266,11 +1338,6 @@
 
       .hero-location {
         text-align: left;
-      }
-
-      .hero-actions {
-        flex-direction: column;
-        align-items: flex-start;
       }
     }
 
@@ -1420,8 +1487,13 @@
                 <div class="panel-text">Every project management tool was built for software. Hardware teams speak in
                   person-days, BOM lead times, and physical test results. We built the tool that speaks their language.
                 </div>
-                <div class="project-image">
-                  <img src="assets/infinityx-hero.jpg" alt="InfinityX" loading="lazy">
+                <div class="project-slider">
+                  <div class="slide project-image">
+                    <img src="assets/infinityx-hero.jpg" alt="InfinityX" loading="lazy">
+                  </div>
+                  <div class="slide project-video">
+                    <video src="assets/infinityx.mp4" autoplay muted loop playsinline loading="lazy"></video>
+                  </div>
                 </div>
                 <div class="panel-tags">
                   <span class="tech-tag">React + Vite</span>
