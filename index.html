@@ -1288,7 +1288,7 @@
       }
 
       .project-header {
-        grid-template-columns: 40px 1fr auto;
+        grid-template-columns: 1fr auto;
         gap: 20px;
         padding: 24px 5vw;
       }
@@ -1302,26 +1302,46 @@
       }
 
       .project-name {
-        font-size: 24px;
+        font-size: 28px;
+        flex-wrap: wrap;
       }
 
       .project-tagline {
-        font-size: 13px;
+        font-size: 14px;
       }
     }
 
     @media (max-width: 600px) {
       nav {
-        padding: 15px 5vw;
+        padding: 24px 24px;
       }
 
       .nav-links {
         display: none;
       }
 
+      .hero {
+        padding: 0 24px;
+        padding-bottom: 180px;
+      }
+
+      .hero-title {
+        font-size: clamp(48px, 14vw, 72px);
+      }
+      
+      .hero-title .line {
+        margin-bottom: -5px;
+      }
+
+      .hero-desc {
+        max-width: 100%;
+        margin-top: 16px;
+      }
+
       .hero-actions {
         flex-direction: column;
         width: 100%;
+        gap: 16px;
       }
 
       .btn-primary,
