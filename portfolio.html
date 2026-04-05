@@ -638,15 +638,14 @@ nav {
   grid-template-columns: 80px 1fr auto auto;
   align-items: center;
   gap: 40px;
-  padding: 36px 0;
+  padding: 36px 5vw;
+  margin: 0 -5vw;
   cursor: none;
   transition: background 0.3s ease;
 }
 
 .project-header:hover {
   background: var(--paper2);
-  margin: 0 -5vw;
-  padding: 36px 5vw;
 }
 
 .project-number {
@@ -1477,7 +1476,8 @@ footer {
           <div class="project-tagline">Zero-waste food replicas, interactive wallpapers, AI heritage reconstruction.</div>
         </div>
         <div class="project-type">Hardware · Physical</div>
-        <div class="project-arrow">↗</div>
+        <a href="https://www.lucid3d.in/" target="_blank" class="project-arrow"
+          onclick="event.stopPropagation()" style="text-decoration:none;">↗</a>
       </div>
       <div class="project-panel">
         <div class="project-panel-inner">
@@ -1692,12 +1692,6 @@ const lenis = new Lenis({
   smoothWheel: true,
 });
 
-function raf(time) {
-  lenis.raf(time);
-  requestAnimationFrame(raf);
-}
-requestAnimationFrame(raf);
-
 // ══════════════════════════════════════════════════════════════════
 // CUSTOM CURSOR
 // ══════════════════════════════════════════════════════════════════
@@ -1712,26 +1706,9 @@ let dotX = 0, dotY = 0;
 document.addEventListener('mousemove', (e) => {
   mouseX = e.clientX;
   mouseY = e.clientY;
+  targetRotationX = (e.clientY / window.innerHeight - 0.5) * 0.5;
+  targetRotationY = (e.clientX / window.innerWidth - 0.5) * 0.5;
 });
-
-function animateCursor() {
-  // Smooth follow for ring
-  cursorX += (mouseX - cursorX) * 0.3;
-  cursorY += (mouseY - cursorY) * 0.3;
-  
-  // Faster follow for dot
-  dotX += (mouseX - dotX) * 0.8;
-  dotY += (mouseY - dotY) * 0.8;
-  
-  let dotScale = cursor.classList.contains('active') ? 0 : 1;
-  
-  cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
-  cursorDot.style.transform = `translate3d(${dotX}px, ${dotY}px, 0) scale(${dotScale})`;
-  cursorText.style.transform = `translate3d(${mouseX + 20}px, ${mouseY - 8}px, 0)`;
-  
-  requestAnimationFrame(animateCursor);
-}
-animateCursor();
 
 // Cursor interactions
 const interactiveElements = document.querySelectorAll('a, button, .project-header, .tech-tag');
@@ -1750,12 +1727,13 @@ interactiveElements.forEach(el => {
 // THREE.JS 3D BACKGROUND
 // ══════════════════════════════════════════════════════════════════
 const canvas = document.getElementById('hero-canvas');
+const heroSection = document.getElementById('hero');
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
 
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
 // Create wireframe icosahedron
 const geometry = new THREE.IcosahedronGeometry(3, 1);
@@ -1781,30 +1759,48 @@ scene.add(mesh2);
 
 camera.position.z = 8;
 
-// Mouse interaction
+// Mouse interaction for 3D
 let targetRotationX = 0;
 let targetRotationY = 0;
 
-document.addEventListener('mousemove', (e) => {
-  targetRotationX = (e.clientY / window.innerHeight - 0.5) * 0.5;
-  targetRotationY = (e.clientX / window.innerWidth - 0.5) * 0.5;
-});
+// Track hero visibility to skip Three.js rendering when off-screen
+let heroVisible = true;
+const heroObserver = new IntersectionObserver((entries) => {
+  heroVisible = entries[0].isIntersecting;
+}, { threshold: 0 });
+heroObserver.observe(heroSection);
 
-function animate3D() {
-  requestAnimationFrame(animate3D);
-  
-  // Smooth rotation
-  mesh.rotation.x += (targetRotationX - mesh.rotation.x) * 0.02;
-  mesh.rotation.y += (targetRotationY - mesh.rotation.y) * 0.02;
-  mesh.rotation.z += 0.001;
-  
-  mesh2.rotation.x += (targetRotationX * 1.5 - mesh2.rotation.x) * 0.015;
-  mesh2.rotation.y += (-targetRotationY * 1.5 - mesh2.rotation.y) * 0.015;
-  mesh2.rotation.z -= 0.002;
-  
-  renderer.render(scene, camera);
+// ══════════════════════════════════════════════════════════════════
+// SINGLE UNIFIED ANIMATION LOOP
+// ══════════════════════════════════════════════════════════════════
+function mainLoop(time) {
+  // Lenis smooth scroll
+  lenis.raf(time);
+
+  // Cursor
+  cursorX += (mouseX - cursorX) * 0.3;
+  cursorY += (mouseY - cursorY) * 0.3;
+  dotX += (mouseX - dotX) * 0.8;
+  dotY += (mouseY - dotY) * 0.8;
+  const dotScale = cursor.classList.contains('active') ? 0 : 1;
+  cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+  cursorDot.style.transform = `translate3d(${dotX}px, ${dotY}px, 0) scale(${dotScale})`;
+  cursorText.style.transform = `translate3d(${mouseX + 20}px, ${mouseY - 8}px, 0)`;
+
+  // Three.js — only render when hero is visible
+  if (heroVisible) {
+    mesh.rotation.x += (targetRotationX - mesh.rotation.x) * 0.02;
+    mesh.rotation.y += (targetRotationY - mesh.rotation.y) * 0.02;
+    mesh.rotation.z += 0.001;
+    mesh2.rotation.x += (targetRotationX * 1.5 - mesh2.rotation.x) * 0.015;
+    mesh2.rotation.y += (-targetRotationY * 1.5 - mesh2.rotation.y) * 0.015;
+    mesh2.rotation.z -= 0.002;
+    renderer.render(scene, camera);
+  }
+
+  requestAnimationFrame(mainLoop);
 }
-animate3D();
+requestAnimationFrame(mainLoop);
 
 // Resize handler
 window.addEventListener('resize', () => {
