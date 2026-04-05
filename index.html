@@ -1339,6 +1339,49 @@
       .hero-location {
         text-align: left;
       }
+
+      .hero-desc {
+        font-size: 15px;
+        line-height: 1.6;
+      }
+
+      .panel-text {
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .panel-label {
+        font-size: 11px;
+      }
+
+      .panel-feature {
+        font-size: 13px;
+        padding-left: 16px;
+      }
+
+      .panel-tags {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .tech-tag {
+        font-size: 8px;
+        padding: 5px 10px;
+      }
+
+      .project-slider {
+        gap: 12px;
+      }
+
+      .project-panel-inner {
+        padding: 24px 16px;
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
     }
 
     /* Hide cursor on touch devices */
@@ -1413,7 +1456,7 @@
       </h1>
 
       <p class="hero-desc">
-        Two builders figuring things out by building them - hardware ops, 3D fabrication, social platforms, and more.
+        Two builders figuring things out by building them — EV charging innovation, 3D fabrication, social platforms, and more.
       </p>
 
       <div class="hero-actions">
@@ -1470,12 +1513,11 @@
           <div class="project-info">
             <div class="project-name">
               InfinityX
-              <span class="project-tag">Live</span>
+              <span class="project-tag">Funded</span>
             </div>
-            <div class="project-tagline">Sprint management built for hardware teams - running at a live EV startup.
-            </div>
+            <div class="project-tagline">Petrol-pump experience for EVs — 30-second cell-swapping. Raised ₹9Cr, multiple IPs filed.</div>
           </div>
-          <div class="project-type">SaaS · Hardware Ops</div>
+          <div class="project-type">Hardware · EV</div>
           <a href="https://www.magiic.in/" target="_blank" class="project-arrow" onclick="event.stopPropagation()"
             style="text-decoration:none;">↗</a>
         </div>
@@ -1483,10 +1525,8 @@
           <div class="project-panel-inner">
             <div class="panel-grid">
               <div class="panel-section">
-                <div class="panel-label">The problem</div>
-                <div class="panel-text">Every project management tool was built for software. Hardware teams speak in
-                  person-days, BOM lead times, and physical test results. We built the tool that speaks their language.
-                </div>
+                <div class="panel-label">The vision</div>
+                <div class="panel-text">With the goal to provide a petrol-pump like experience to Electric Vehicle users, we invented a novel method of fueling EVs that we call cell-swapping. Our proprietary technique removes all the discharged battery cells from an EV's battery pack and replaces it with fully charged cells from the station — all through a single cable.</div>
                 <div class="project-slider">
                   <div class="slide project-image">
                     <img src="assets/infinityx-hero.jpg" alt="InfinityX" loading="lazy">
@@ -1495,22 +1535,27 @@
                     <video src="assets/infinityx.mp4" autoplay muted loop playsinline loading="lazy"></video>
                   </div>
                 </div>
-                <div class="panel-tags">
-                  <span class="tech-tag">React + Vite</span>
-                  <span class="tech-tag">Supabase</span>
-                  <span class="tech-tag">Zustand</span>
-                  <span class="tech-tag">WebSockets</span>
-                  <span class="tech-tag">PWA</span>
-                </div>
               </div>
               <div class="panel-section">
                 <div class="panel-label">How it works</div>
                 <div class="panel-features">
-                  <div class="panel-feature">Capacity-aware sprint planning - leave, attendance, holidays baked in</div>
-                  <div class="panel-feature">Three velocity modes: Story Points, Goals, or Person-Days</div>
-                  <div class="panel-feature">Full real-time team chat with DMs, rooms, file attachments</div>
-                  <div class="panel-feature">Drag-to-reorder goals by priority (dnd-kit)</div>
-                  <div class="panel-feature">Currently in use at a live EV startup as beta testing.</div>
+                  <div class="panel-feature">Customer arrives at an InfinityX station and connects a single cable</div>
+                  <div class="panel-feature">Discharged cells are automatically extracted from the battery pack</div>
+                  <div class="panel-feature">Fully charged cells are swapped in from the station inventory</div>
+                  <div class="panel-feature">30 seconds later — the EV is fully charged and ready to go</div>
+                </div>
+                <div class="panel-label" style="margin-top:24px">Traction</div>
+                <div class="panel-features">
+                  <div class="panel-feature">Raised ₹9 Crore in funding</div>
+                  <div class="panel-feature">Filed several intellectual property patents</div>
+                  <div class="panel-feature">Proprietary cell-swapping technology — first of its kind</div>
+                </div>
+                <div class="panel-tags" style="margin-top:24px">
+                  <span class="tech-tag">Cell-Swapping</span>
+                  <span class="tech-tag">Battery Tech</span>
+                  <span class="tech-tag">EV Infrastructure</span>
+                  <span class="tech-tag">Hardware R&D</span>
+                  <span class="tech-tag">IP Filed</span>
                 </div>
               </div>
             </div>
