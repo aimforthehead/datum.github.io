@@ -1972,6 +1972,24 @@
 
     camera.position.z = 8;
 
+    // Position meshes dynamically based on screen width
+    function positionMeshes() {
+      if (window.innerWidth < 600) {
+        // Shift up, right, and scale down on mobile so it sits like a desktop accent!
+        mesh.position.set(3.5, 5.5, -4);
+        mesh2.position.set(3.5, 5.5, -4);
+        mesh.scale.set(0.5, 0.5, 0.5);
+        mesh2.scale.set(0.5, 0.5, 0.5);
+      } else {
+        // Centered on desktop
+        mesh.position.set(0, 0, 0);
+        mesh2.position.set(0, 0, 0);
+        mesh.scale.set(1, 1, 1);
+        mesh2.scale.set(1, 1, 1);
+      }
+    }
+    positionMeshes();
+
     // Mouse interaction for 3D
     let targetRotationX = 0;
     let targetRotationY = 0;
@@ -2022,6 +2040,7 @@
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
+      positionMeshes();
     });
 
     // ══════════════════════════════════════════════════════════════════
